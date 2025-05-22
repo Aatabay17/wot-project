@@ -1,0 +1,18 @@
+{
+  "name": "wot-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@node-wot/binding-coap": "^0.9.1",
+    "@node-wot/binding-http": "^0.9.1",
+    "@node-wot/binding-mqtt": "^0.9.1",
+    "@node-wot/core": "^0.9.1"
+  }
+}
