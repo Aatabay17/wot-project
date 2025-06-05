@@ -1,0 +1,53 @@
+{
+  "@context": "https://www.w3.org/2019/wot/td/v1",
+  "id": "urn:dev:ops:temperature-sensor-123",
+  "title": "Temperature Sensor",
+  "properties": {
+    "temperature": {
+      "type": "number",
+      "readOnly": true,
+      "observable": true,
+      "forms": [
+        {
+          "href": 
+"http://localhost:8080/temperature-sensor/properties/temperature",
+          "contentType": "application/json",
+          "op": ["readproperty", "observeproperty"]
+        },
+        {
+          "href": "coap://localhost:5683/temp",
+          "contentType": "application/json",
+          "op": ["readproperty", "observeproperty"]
+        },
+        {
+          "href": "mqtt://localhost/temperature-sensor/temperature",
+          "contentType": "application/json",
+          "op": ["readproperty", "observeproperty"]
+        }
+      ]
+    }
+  },
+  "actions": {
+    "reset": {
+      "forms": [
+        {
+          "href": 
+"http://localhost:8080/temperature-sensor/actions/reset",
+          "contentType": "application/json",
+          "op": ["invokeaction"]
+        },
+        {
+          "href": "coap://localhost:5683/reset",
+          "contentType": "application/json",
+          "op": ["invokeaction"]
+        },
+        {
+          "href": "mqtt://localhost/temperature-sensor/reset",
+          "contentType": "application/json",
+          "op": ["invokeaction"]
+        }
+      ]
+    }
+  }
+}
+
