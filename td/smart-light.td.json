@@ -1,0 +1,58 @@
+{
+  "@context": ["https://www.w3.org/2019/wot/td/v1"],
+  "title": "Smart Light",
+  "security": ["nosec"],
+  "securityDefinitions": {
+    "nosec": {
+      "scheme": "nosec"
+    }
+  },
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["on", "off"],
+      "observable": true,
+      "readOnly": false,
+      "writeOnly": false,
+      "forms": [
+        {
+          "href": "http://localhost:8080/smart-light/properties/status",
+          "op": ["readproperty", "writeproperty", "observeproperty"],
+          "contentType": "application/json"
+        },
+        {
+          "href": "coap://localhost:5683/smart-light/status",
+          "op": ["readproperty", "writeproperty", "observeproperty"],
+          "contentType": "application/json"
+        },
+        {
+          "href": "mqtt://localhost:1883/smart-light/status",
+          "op": ["readproperty", "writeproperty", "observeproperty"],
+          "contentType": "application/json"
+        }
+      ]
+    }
+  },
+  "actions": {
+    "toggle": {
+      "forms": [
+        {
+          "href": "http://localhost:8080/smart-light/actions/toggle",
+          "op": ["invokeaction"],
+          "contentType": "application/json"
+        },
+        {
+          "href": "coap://localhost:5683/smart-light/toggle",
+          "op": ["invokeaction"],
+          "contentType": "application/json"
+        },
+        {
+          "href": "mqtt://localhost:1883/smart-light/toggle",
+          "op": ["invokeaction"],
+          "contentType": "application/json"
+        }
+      ]
+    }
+  }
+}
+
