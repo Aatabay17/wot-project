@@ -1,15 +1,16 @@
 const { Servient } = require("@node-wot/core");
 const { HttpClientFactory } = require("@node-wot/binding-http");
 const { CoapClientFactory } = require("@node-wot/binding-coap");
+const { MqttClientFactory } = require("@node-wot/binding-mqtt");
 
 async function run() {
   const servient = new Servient();
   servient.addClientFactory(new HttpClientFactory());
   servient.addClientFactory(new CoapClientFactory());
+  servient.addClientFactory(new MqttClientFactory());
 
   const WoT = await servient.start();
 
-  // Thing Description
   const td = {
     "@context": "https://www.w3.org/2019/wot/td/v1",
     "id": "urn:dev:ops:temperature-sensor-123",
@@ -30,6 +31,11 @@ async function run() {
             "href": "coap://172.25.125.169:5683/temp",
             "contentType": "application/json",
             "op": ["readproperty", "observeproperty"]
+          },
+          {
+            "href": "mqtt://localhost/temperature-sensor/temperature",
+            "contentType": "application/json",
+            "op": ["readproperty", "observeproperty"]
           }
         ]
       }
@@ -47,6 +53,11 @@ async function run() {
             "href": "coap://172.25.125.169:5683/reset",
             "contentType": "application/json",
             "op": ["invokeaction"]
+          },
+          {
+            "href": "mqtt://localhost/temperature-sensor/reset",
+            "contentType": "application/json",
+            "op": ["invokeaction"]
           }
         ]
       }
@@ -57,33 +68,28 @@ async function run() {
     const thing = await WoT.consume(td);
     console.log("Connected to Thing");
 
-    // Чтение текущей температуры
-    const tempData = await thing.readProperty("temperature");
-    const temp = await tempData.value();
+    // Читаем текущую температуру
+    const temp = await thing.readProperty("temperature");
     console.log(`Current temperature: ${temp}`);
 
-    // Подписка на обновления
+    // Наблюдаем обновления температуры
     let lastValue = null;
     let lastTime = 0;
 
     await thing.observeProperty(
       "temperature",
-      async (data) => {
-        const val = await data.value();
-        const now = Date.now();
-
-        // Показываем только если значение изменилось и прошло 10 секунд
-        if (val !== lastValue && now - lastTime >= 10_000) {
-          console.log(`Temperature update: ${val}`);
-          lastValue = val;
-          lastTime = now;
+      (data) => {
+        if (data !== lastValue && Date.now() - lastTime > 10000) {
+          console.log(`Temperature update: ${data}`);
+          lastValue = data;
+          lastTime = Date.now();
         }
       },
       (err) => console.error("Observe error:", err),
       { contentType: "application/json" }
     );
 
-    // Вызов действия reset через 5 секунд
+    // Вызов reset через 5 секунд
     setTimeout(async () => {
       await thing.invokeAction("reset");
       console.log("Sensor reset");
