@@ -28,7 +28,7 @@ on port 1883
    ```bash
    git clone <repository-url>
    cd wot-project
-
+   ``` 
 
 2. Install dependencies:
 npm install
@@ -37,28 +37,28 @@ npm install
 
 
 
-Running
+## Running
 
-Start the Things server (Temperature Sensor and Smart Light):
+### Start the Things server (Temperature Sensor and Smart Light):
 node server.js
 
-Start the TD server (serves Thing Descriptions and static files):
+### Start the TD server (serves Thing Descriptions and static files):
 node td-server.js
 
-Testing
+## Testing
 
-TD server endpoint for all Things:
+### TD server endpoint for all Things:
 http://localhost:8081/things
 
-TD endpoint for specific Things:
+### TD endpoint for specific Things:
 http://localhost:8081/things/temperature-sensor
 http://localhost:8081/things/smart-light
 
-Main page with UI:
+### Main page with UI:
 http://localhost:8081/
 
 
-Project Structure
+## Project Structure
 wot-project/
 ├── client.js            # WoT client consuming Things
 ├── server.js            # Server for Temperature Sensor and Smart 
@@ -76,6 +76,6 @@ files
 └── node_modules/
 
 
-Additional Notes
+## Additional Notes
 MQTT broker must be accessible at mqtt://localhost:1883
 Devices communicate over HTTP, CoAP, and MQTT protocols
