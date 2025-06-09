@@ -4,15 +4,14 @@
 
 This project implements a simple Web of Things (WoT) architecture with two 
 devices:  
-- **Temperature Sensor**  
-- **Smart Light**
+- **Temperature Sensor** — with real-time temperature reading, reset functionality, and last updated timestamp
+- **Smart Light** — with on/off toggle, colored status indicator (green when on, gray when off), and last updated timestamp
 
 Servers are implemented using Node.js and the 
 [node-wot](https://github.com/eclipse/thingweb.node-wot) library. Devices 
-are accessible via HTTP, CoAP, and MQTT. There is also a TD server that 
-serves Thing Descriptions.
+are accessible via HTTP, CoAP, and MQTT. There is also a TD server that serves Thing Descriptions along with a web UI.
+The web UI displays current device states, Thing Descriptions in JSON format, and supports interactive controls with automatic periodic updates.
 
----
 
 ## Requirements
 
@@ -20,7 +19,6 @@ serves Thing Descriptions.
 - MQTT broker (e.g., [Mosquitto](https://mosquitto.org/)) running locally 
 on port 1883
 
----
 
 ## Installation
 
@@ -36,7 +34,6 @@ npm install
 3. Start the local MQTT broker if not already running.
 
 
-
 ## Running
 
 ### Start the Things server (Temperature Sensor and Smart Light):
@@ -44,6 +41,7 @@ node server.js
 
 ### Start the TD server (serves Thing Descriptions and static files):
 node td-server.js
+
 
 ## Testing
 
@@ -54,25 +52,25 @@ http://localhost:8081/things
 http://localhost:8081/things/temperature-sensor
 http://localhost:8081/things/smart-light
 
-### Main page with UI:
+### Main page with interactive UI:
 http://localhost:8081/
 
 
 ## Project Structure
 wot-project/
-├── client.js            # WoT client consuming Things
-├── server.js            # Server for Temperature Sensor and Smart 
-Light
-├── smart-light.js       # Separate Smart Light server (can be merged 
-with server.js)
-├── td-server.js         # Server serving Thing Descriptions and static 
-files
+├── client.js             # WoT client consuming Things (optional)
+├── server.js             # Server for Temperature Sensor and Smart Light
+├── smart-light.js        # Separate Smart Light server (can be merged with server.js)
+├── td-server.js          # Server serving Thing Descriptions and static files (UI)
 ├── package.json
 ├── package-lock.json
-├── td/                  # Folder with TD JSON files
+├── td/                   # Folder with TD JSON files
 │   ├── temperature-sensor.td.json
 │   └── smart-light.td.json
-├── public/              # Static files (HTML, JS, CSS)
+├── public/               # Static files (HTML, JS, CSS)
+│   ├── index.html
+│   ├── main.js
+│   └── styles.css
 └── node_modules/
 
 
