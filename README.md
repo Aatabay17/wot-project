@@ -74,7 +74,7 @@ wot-project/
 └── node_modules/
 
 
-##Features and Notes
+## Features and Notes
 
 1. Real-time data updates every 5 seconds with timestamps showing last successful update
 2. Smart Light status changes color dynamically: green when ON, gray when OFF
