@@ -74,6 +74,17 @@ wot-project/
 └── node_modules/
 
 
+###Features and Notes
+
+1. Real-time data updates every 5 seconds with timestamps showing last successful update
+2. Smart Light status changes color dynamically: green when ON, gray when OFF
+3. Reset button for Temperature Sensor resets the reading and immediately updates UI
+4. Toggle button for Smart Light with delayed status update after action
+5. Thing Descriptions are displayed in formatted JSON on the UI
+6. Devices communicate over HTTP, CoAP, and MQTT protocols
+7. MQTT broker must be accessible at mqtt://localhost:1883 if MQTT is used
+
+
 ## Additional Notes
 MQTT broker must be accessible at mqtt://localhost:1883
 Devices communicate over HTTP, CoAP, and MQTT protocols
