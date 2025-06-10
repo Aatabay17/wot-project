@@ -1,53 +1,57 @@
 {
   "@context": ["https://www.w3.org/2019/wot/td/v1"],
-  "title": "Smart Light",
-  "security": ["nosec"],
-  "securityDefinitions": {
+
+  "title": "Smart Light",                 // Название "вещи" — умная лампа
+
+  "security": ["nosec"],                  // Тип безопасности: "nosec" — без защиты
+  "securityDefinitions": {                // Описание схемы безопасности
     "nosec": {
-      "scheme": "nosec"
+      "scheme": "nosec"                   // Нет схемы безопасности — открытый доступ
     }
   },
-  "properties": {
-    "status": {
-      "type": "string",
-      "enum": ["on", "off"],
-      "observable": true,
-      "readOnly": false,
-      "writeOnly": false,
-      "forms": [
+
+  "properties": {                        // Свойства "вещи"
+    "status": {                         // Свойство "status" — состояние лампы
+      "type": "string",                 // Тип данных — строка
+      "enum": ["on", "off"],            // Возможные значения: "вкл" или "выкл"
+      "observable": true,               // Свойство можно наблюдать (подписываться на изменения)
+      "readOnly": false,                // Свойство можно читать и изменять
+      "writeOnly": false,               // Свойство не является только для записи (т.е. и читать тоже можно)
+      "forms": [                       // Способы взаимодействия с этим свойством (протоколы и URL)
         {
-          "href": "http://localhost:8080/smart-light/properties/status",
+          "href": "http://localhost:8080/smart-light/properties/status",  // HTTP URL
+          "op": ["readproperty", "writeproperty", "observeproperty"],    // Доступные операции: чтение, запись, наблюдение
+          "contentType": "application/json"
+        },
+        {
+          "href": "coap://localhost:5683/smart-light/status",            // COAP URL
           "op": ["readproperty", "writeproperty", "observeproperty"],
           "contentType": "application/json"
         },
         {
-          "href": "coap://localhost:5683/smart-light/status",
-          "op": ["readproperty", "writeproperty", "observeproperty"],
-          "contentType": "application/json"
-        },
-        {
-          "href": "mqtt://localhost:1883/smart-light/status",
+          "href": "mqtt://localhost:1883/smart-light/status",            // MQTT топик
           "op": ["readproperty", "writeproperty", "observeproperty"],
           "contentType": "application/json"
         }
       ]
     }
   },
-  "actions": {
-    "toggle": {
-      "forms": [
+
+  "actions": {                         // Действия, которые можно выполнить с "вещью"
+    "toggle": {                       // Действие "toggle" — переключить состояние лампы
+      "forms": [                     // Способы вызова действия (протоколы и URL)
         {
-          "href": "http://localhost:8080/smart-light/actions/toggle",
+          "href": "http://localhost:8080/smart-light/actions/toggle",    // HTTP URL
+          "op": ["invokeaction"],                                        // Операция — вызвать действие
+          "contentType": "application/json"
+        },
+        {
+          "href": "coap://localhost:5683/smart-light/toggle",            // COAP URL
           "op": ["invokeaction"],
           "contentType": "application/json"
         },
         {
-          "href": "coap://localhost:5683/smart-light/toggle",
-          "op": ["invokeaction"],
-          "contentType": "application/json"
-        },
-        {
-          "href": "mqtt://localhost:1883/smart-light/toggle",
+          "href": "mqtt://localhost:1883/smart-light/toggle",            // MQTT топик
           "op": ["invokeaction"],
           "contentType": "application/json"
         }
@@ -55,4 +59,3 @@
     }
   }
 }
-
